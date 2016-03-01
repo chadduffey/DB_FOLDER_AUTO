@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Dropbox Project Automation{% endblock %}
+
+{% block page_content %}
+
+	{% if form %}
+		<hr>
+		    <figure>
+				<img src="https://dl.dropboxusercontent.com/u/354544978/MKTG-DEMO/static/dropbox.png" height="70" style="padding-bottom: 20px;"/>
+				{{ wtf.quick_form(form) }}
+			</figure>
+		<hr>
+	{% endif %}
+	{% if db_auth %}
+		<h3>Provision new Project</h3>
+		<p>{{ template_folder }} is your current template folder</p>
+		{{ wtf.quick_form(newProjectForm) }}
+		{{ folder }}
+	{% endif %}
+{% endblock %}
