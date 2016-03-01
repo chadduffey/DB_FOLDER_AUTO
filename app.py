@@ -19,7 +19,7 @@ from dropboxAPI import (get_info, get_team_members, get_dropbox_groups, get_user
 app = Flask(__name__)
 #Breaks Heroku
 #app.config['SECRET_KEY'] = os.urandom(24)
-app.config['SECRET_KEY'] = "w3xkIqP5nF6a8Ndq79J4rK5nK4MI/HM4kUJTB3PWa8cxmiqrxQZ/+hgp/d+gcV7e"
+app.config['SECRET_KEY'] = "w3xkIaP5nF6a8Ndq79J4rK5nK4MI/HMakUJTB3PWa8cxmiqrxQZ/+hgp/d+gcV7e"
 app.config['DEBUG'] = True
 
 manager = Manager(app)
@@ -53,8 +53,8 @@ def auth():
 	if form.validate_on_submit():
 		return redirect('https://www.dropbox.com/1/oauth2/authorize?%s' % urllib.urlencode({
 			'client_id': APP_KEY,
-			'redirect_uri': url_for('db_auth_finish', _external=True, _scheme='https'),
-			#'redirect_uri': url_for('db_auth_finish', _external=True),
+			#'redirect_uri': url_for('db_auth_finish', _external=True, _scheme='https'),
+			'redirect_uri': url_for('db_auth_finish', _external=True),
 			'response_type': 'code',
 			'state': csrf_token
 			}))
@@ -69,8 +69,8 @@ def db_auth_finish():
 			data={
 			'code': request.args['code'],
 			'grant_type': 'authorization_code',
-			'redirect_uri': url_for('db_auth_finish', _external=True, _scheme='https')},
-			#'redirect_uri': url_for('db_auth_finish', _external=True)},
+			#'redirect_uri': url_for('db_auth_finish', _external=True, _scheme='https')},
+			'redirect_uri': url_for('db_auth_finish', _external=True)},
 			auth=(APP_KEY, APP_SECRET)).json()
 	session['dropbox_user_token'] = data['access_token']
 	return redirect(url_for('main'))
