@@ -11,3 +11,8 @@ class NewProjectForm(Form):
 	project_rw_members = SelectField('Dropbox Group for read & write access', choices=[('a', 'a')])
 	project_ro_members = SelectField('Dropbox Group for read only access', choices=[('a', 'a')])
 	submit = SubmitField('Create New Project')
+
+class TokenGatheringForm(Form):
+	file_token = StringField("File Access Token for the Team", validators=[Required()])
+	member_mgmt_token = StringField("Member Management Access Token for the Team", validators=[Required()])
+	submit = SubmitField('Validate Tokens')
