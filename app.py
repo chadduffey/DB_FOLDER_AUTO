@@ -33,9 +33,6 @@ APP_SECRET = '6u1exxfq1aydw4m'
 #Static template folder till we get some front end code to do this:
 template_folder = "/Project_Automation_Template"
 
-#Read Dropbox Business API key from OS or Heroku config var:
-DB_BUSINESS_AUTH = os.environ['DB_AUTH']
-
 csrf_token = base64.urlsafe_b64encode(os.urandom(18))
 
 
@@ -48,7 +45,19 @@ def index():
 def auth_tokens():
 	form = TokenGatheringForm()
 	if form.validate_on_submit():
-		return redirect(url_for('menu'))
+		basic_mgmt_token_check = get_info(form.member_mgmt_token.data.strip())
+		if basic_mgmt_token_check == False:
+			flash('There is an issue with your Team Management Token')
+			return render_template('auth_tokens.html', form=form)
+		team_members = get_team_members(form.member_mgmt_token.data.strip())
+		basic_file_token_check = get_user_account_detail(form.file_token.data.strip(), team_members["members"][0]["profile"]["team_member_id"])
+		if basic_file_token_check == False:
+			flash('There is an issue with your File Access Token')
+			return render_template('auth_tokens.html', form=form) 
+		#we trust the tokens from here. add them to session object. 
+		session['dropbox_file_token'] = form.file_token.data.strip()
+		session['dropbox_mgmt_token'] = form.member_mgmt_token.data.strip()
+		return render_template('tokens_validated.html', mgmt_token=basic_mgmt_token_check, file_token=basic_file_token_check)
 	return render_template('auth_tokens.html', form=form)
 
 # @app.route('/auth', methods=['GET', 'POST'])
@@ -93,33 +102,34 @@ def auth_tokens():
 # 	perms_change_status_ro = add_dropbox_share_permissions(session['dropbox_user_token'], shared_folder_detail['shared_folder_id'], ro_group, "viewer")
 # 	return render_template('complete.html', folder_content=folders_to_create, project_name=top_level_folder_to_create)
 
+@app.route('/tokens_validated', methods=['GET', 'POST'])
+def tokens_validated():
+	return render_template('tokens_validated.html')
+
 @app.route('/menu', methods=['GET', 'POST'])
 def menu():
 	return render_template('menu.html')
 
-# @app.route('/main', methods=['GET', 'POST'])
-# def main():
-# 	newProjectForm = NewProjectForm()
+@app.route('/main', methods=['GET', 'POST'])
+def main():
+	newProjectForm = NewProjectForm()
 	
-# 	dropbox_groups = get_dropbox_groups(DB_BUSINESS_AUTH)
-# 	newProjectForm.project_rw_members.choices = [ (g['group_id'], g['group_name']) for g in dropbox_groups['groups']]
-# 	newProjectForm.project_ro_members.choices = [ (g['group_id'], g['group_name']) for g in dropbox_groups['groups']]
+	dropbox_groups = get_dropbox_groups(session['dropbox_mgmt_token'])
+	newProjectForm.project_rw_members.choices = [ (g['group_id'], g['group_name']) for g in dropbox_groups['groups']]
+	newProjectForm.project_ro_members.choices = [ (g['group_id'], g['group_name']) for g in dropbox_groups['groups']]
 
-# 	if newProjectForm.validate_on_submit():
-# 		return complete(newProjectForm)
+	if newProjectForm.validate_on_submit():
+		return "submit from main done"#complete(newProjectForm)
 
-# 	basic_team_information = get_info(DB_BUSINESS_AUTH)
-# 	user_account_detail = get_user_account_detail(session['dropbox_user_token'])
-# 	template_folder_info = get_file_or_folder_metdata(session['dropbox_user_token'], template_folder)
-# 	if "error" in template_folder_info:
-# 		if template_folder_info['error']['path']['.tag'] == 'not_found': 
-# 			create_dropbox_folder(session['dropbox_user_token'], template_folder)
+	basic_team_information = get_info(session['dropbox_mgmt_token'])
+	#user_account_detail = get_user_account_detail(session['dropbox_user_token'])
+	#template_folder_info = get_file_or_folder_metdata(session['dropbox_user_token'], template_folder)
+	#if "error" in template_folder_info:
+	#	if template_folder_info['error']['path']['.tag'] == 'not_found': 
+	#		create_dropbox_folder(session['dropbox_user_token'], template_folder)
 
-# 	session['account_id'] = user_account_detail['account_id']
-# 	return render_template('main.html', db_auth=True, newProjectForm=newProjectForm,  
-# 							user_detail=user_account_detail,
-# 							basic_team_information=basic_team_information,
-# 							template_folder=template_folder)
+	#session['account_id'] = user_account_detail['account_id']
+	return render_template('main.html', db_auth=True, newProjectForm=newProjectForm)
 
 
 @app.errorhandler(404)

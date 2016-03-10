@@ -13,6 +13,6 @@ class NewProjectForm(Form):
 	submit = SubmitField('Create New Project')
 
 class TokenGatheringForm(Form):
-	file_token = StringField("File Access Token for the Team", validators=[Required()])
-	member_mgmt_token = StringField("Member Management Access Token for the Team", validators=[Required()])
+	file_token = StringField("File Access Token", validators=[Required()], default='')
+	member_mgmt_token = StringField("Member Management Token", validators=[Required()], default='')
 	submit = SubmitField('Validate Tokens')

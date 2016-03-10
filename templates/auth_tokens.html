@@ -5,7 +5,12 @@
 
 {% block page_content %}
     <div class="text-vertical-center">
-	    <h3>Authorization for the Team</h3>
+	    <h3>Authorization</h3>
 	    {{ wtf.quick_form(form) }}
-    </div>	
+	    <div class="spinner">
+			<img src="https://dl.dropboxusercontent.com/u/354544978/MKTG-DEMO/static/spin.gif" style="padding-top:30px;"/>
+		</div>
+    </div>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="./static/js/app.js" type="text/javascript" charset="utf-8"></script>
 {% endblock %}

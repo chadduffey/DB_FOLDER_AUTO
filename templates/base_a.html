@@ -43,6 +43,8 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
+					<li><a href="{{url_for('main')}}">Deploy Shared Folder to Group</a></li>
+					<li><a href="/">Deploy Non Shared Folder to Group</a></li>
 				</ul>
 			</div>
 		</div>
@@ -52,7 +54,7 @@
 {% block content %}
 	<div class="container">
 		{% for message in get_flashed_messages() %}
-			<div class="alert alert-info">
+			<div class="alert alert-success">
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
 				{{ message }}
 			</div>
