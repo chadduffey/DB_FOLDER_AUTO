@@ -126,15 +126,13 @@ def main():
 	newProjectForm.project_ro_members.choices = [ (g['group_id'], g['group_name']) for g in dropbox_groups['groups']]
 
 	if newProjectForm.validate_on_submit():
+		template_folder_info = get_file_or_folder_metdata(session['dropbox_file_token'], template_folder, newProjectForm.user_id.data)
+		if "error" in template_folder_info:
+			if template_folder_info['error']['path']['.tag'] == 'not_found': 
+				create_dropbox_folder(session['dropbox_file_token'], template_folder, newProjectForm.user_id.data)
+		session['account_id'] = newProjectForm.user_id.data
 		return "submit from main done"#complete(newProjectForm)
 
-	#user_account_detail = get_user_account_detail(session['dropbox_user_token'])
-	#template_folder_info = get_file_or_folder_metdata(session['dropbox_user_token'], template_folder)
-	#if "error" in template_folder_info:
-	#	if template_folder_info['error']['path']['.tag'] == 'not_found': 
-	#		create_dropbox_folder(session['dropbox_user_token'], template_folder)
-
-	#session['account_id'] = user_account_detail['account_id']
 	return render_template('main.html', db_auth=True, newProjectForm=newProjectForm)
 
 
