@@ -114,6 +114,13 @@ def menu():
 def main():
 	newProjectForm = NewProjectForm()
 	
+	dropbox_users = get_team_members(session['dropbox_mgmt_token'])
+	newProjectForm.user_id.choices = ( 
+										[ (u['profile']['team_member_id'], u['profile']['email'] 
+										if u['profile']['status']['.tag'] == "active" else "(inactive) " + u['profile']['email']) 
+										for u in dropbox_users['members'] ] 
+										)
+
 	dropbox_groups = get_dropbox_groups(session['dropbox_mgmt_token'])
 	newProjectForm.project_rw_members.choices = [ (g['group_id'], g['group_name']) for g in dropbox_groups['groups']]
 	newProjectForm.project_ro_members.choices = [ (g['group_id'], g['group_name']) for g in dropbox_groups['groups']]
@@ -121,7 +128,6 @@ def main():
 	if newProjectForm.validate_on_submit():
 		return "submit from main done"#complete(newProjectForm)
 
-	basic_team_information = get_info(session['dropbox_mgmt_token'])
 	#user_account_detail = get_user_account_detail(session['dropbox_user_token'])
 	#template_folder_info = get_file_or_folder_metdata(session['dropbox_user_token'], template_folder)
 	#if "error" in template_folder_info:

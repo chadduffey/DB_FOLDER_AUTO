@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_a.html' %}
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}Dropbox Project Automation{% endblock %}
@@ -15,7 +15,7 @@
 	{% endif %}
 	{% if db_auth %}
 		<h3>Provision new Project</h3>
-		<p>{{ template_folder }} is your current template folder</p>
+		<p>You need a folder called 'Project_Automation_Template' in this persons Dropbox for this to work. We will use that folder as our base.</p>
 		{{ wtf.quick_form(newProjectForm) }}
 		{{ folder }}
 	{% endif %}

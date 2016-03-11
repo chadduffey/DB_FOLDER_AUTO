@@ -7,6 +7,7 @@ class AuthDBForm(Form):
 	submit = SubmitField('Authorize Access to Dropbox')
 
 class NewProjectForm(Form):
+	user_id = SelectField('Team Member to Use', choices=[('a', 'a')])
 	project_name = StringField('Project Name', validators=[Required()])
 	project_rw_members = SelectField('Dropbox Group for read & write access', choices=[('a', 'a')])
 	project_ro_members = SelectField('Dropbox Group for read only access', choices=[('a', 'a')])
