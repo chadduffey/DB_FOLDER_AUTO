@@ -39,12 +39,20 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/">Dropbox Services</a>
+				<a class="navbar-brand" href="/"><img src="https://dl.dropboxusercontent.com/u/354544978/MKTG-DEMO/static/dropbox.png" height="20"/></a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="{{url_for('main')}}">Deploy Shared Folder to Group</a></li>
-					<li><a href="/">Deploy Non Shared Folder to Group</a></li>
+					<li class="dropdown">
+			          	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Main Menu<span class="caret"></span></a>
+			          	<ul class="dropdown-menu">
+				            <li><a class='mi' href="{{url_for('main')}}">Deploy Shared Folder to Group</a></li>
+				            <li><a class='mi' href="{{url_for('not_yet')}}">Deploy Non Shared Folder to Group</a></li>
+				            <li><a class='mi' href="{{url_for('not_yet')}}">...feature_x...</a></li>
+				            <li role="separator" class="divider"></li>
+				            <li><a class='mi' href="{{ url_for('logout') }}">Log Out</a></li>
+			          	</ul>
+			        </li>	
 				</ul>
 			</div>
 		</div>

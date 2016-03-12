@@ -4,16 +4,32 @@
 {% block title %}Dropbox Project Automation{% endblock %}
 
 {% block page_content %}
-	<img src="https://dl.dropboxusercontent.com/u/354544978/MKTG-DEMO/static/dropbox.png" height="50" />
 
 	<h3>Basic Team Information: </h3>
 
-	<p><b>Team Name: </b>{{ mgmt_token['name'] }} </p>
-	<p><b>Team Id: </b>{{ mgmt_token['team_id'] }} </p>
-	<p><b>Number of Licenced Users: </b>{{ mgmt_token['num_licensed_users'] }} </p>
-	<p><b>Number of Provisioned Users: </b>{{ mgmt_token['num_provisioned_users'] }} </p>
-	<p><b>Team member 0: </b>{{ file_token['name']['display_name'] }}</p>
-	<p><b>Team member 0 email: </b>{{ file_token['email'] }}</p>
-	<p><b>Team member 0 Id: </b>{{ file_token['team_member_id'] }}</p>
+	<div class="well well-lg">
+		<p><b>Team Name: </b>{{ mgmt_token['name'] }} </p>
+		<p><b>Team Id: </b>{{ mgmt_token['team_id'] }} </p>
+		<p><b>Number of Licenced Users: </b>{{ mgmt_token['num_licensed_users'] }} </p>
+		<p><b>Number of Provisioned Users: </b>{{ mgmt_token['num_provisioned_users'] }} </p>
+		<p><b>Team member 0: </b>{{ file_token['name']['display_name'] }}</p>
+		<p><b>Team member 0 email: </b>{{ file_token['email'] }}</p>
+		<p><b>Team member 0 Id: </b>{{ file_token['team_member_id'] }}</p>
+		<div class="spinner">
+			<div class="well well-lg">
+				<figure>
+					<img src="https://dl.dropboxusercontent.com/u/354544978/MKTG-DEMO/static/spin.gif" style="padding-top:30px;"/>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="./static/js/main.js" type="text/javascript" charset="utf-8"></script>
 
 {% endblock %}
+
+
+
+    
+    

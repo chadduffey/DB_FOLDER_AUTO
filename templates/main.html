@@ -17,6 +17,15 @@
 		<h3>Provision new Project</h3>
 		<p>You need a folder called 'Project_Automation_Template' in this persons Dropbox for this to work. We will use that folder as our base.</p>
 		{{ wtf.quick_form(newProjectForm) }}
-		{{ folder }}
+	    <div class="spinner">
+			<div class="well well-lg">
+				<figure>
+					<img src="https://dl.dropboxusercontent.com/u/354544978/MKTG-DEMO/static/spin.gif" style="padding-top:30px;"/>
+				</div>
+			</div>
+		</div>
+    
+	    <script src="http://code.jquery.com/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./static/js/app.js" type="text/javascript" charset="utf-8"></script>
 	{% endif %}
 {% endblock %}

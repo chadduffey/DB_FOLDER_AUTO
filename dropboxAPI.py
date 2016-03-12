@@ -151,9 +151,9 @@ def get_folders_to_create(folder_information, template_folder, top_level_folder_
 
 	return folder_list
 
-def create_folders(token, list_of_folder_names):
+def create_folders(token, list_of_folder_names, dfb_id):
 	for f in list_of_folder_names:
-		create_dropbox_folder(token, str(f))
+		create_dropbox_folder(token, str(f), dfb_id)
 
 
 

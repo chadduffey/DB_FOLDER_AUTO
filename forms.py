@@ -3,9 +3,6 @@ from flask.ext.wtf import Form, widgets
 from wtforms import StringField, SubmitField, SelectField, BooleanField, FormField
 from wtforms.validators import Required
 
-class AuthDBForm(Form):
-	submit = SubmitField('Authorize Access to Dropbox')
-
 class NewProjectForm(Form):
 	user_id = SelectField('Team Member to Use', choices=[('a', 'a')])
 	project_name = StringField('Project Name', validators=[Required()])
